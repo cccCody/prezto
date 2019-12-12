@@ -16,12 +16,47 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Aliases
-alias ee='exa -Blh --git --time-style long-iso'
+alias ll='exa -Blh --git --time-style long-iso'
 alias sz='source ~/.zshrc'
 alias ta='tmux -CC a -t default || tmux -CC new -s default'
 
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 [ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
+
+aa () {
+  do_kinit=false
+  do_mwinit=false
+
+  if [ $(grep HttpOnly_midway-auth.amazon.com ~/.midway/cookie | cut -d $'\t' -f 5) -lt $( date +%s ) ]; then
+    do_mwinit=true
+    do_kinit=true
+  elif ! klist -s; then
+    do_kinit=true
+  fi
+
+  if [ "$do_kinit" = true ]; then
+    read -s "PASS?Password for $USER: "
+    echo ""
+  fi
+
+  if [ "$do_mwinit" = true ]; then
+    read "OTP?Yubikey: "
+  fi
+
+  if [ "$do_kinit" = true ]; then
+    kinit -f -l 10h <<< $PASS
+  fi
+
+  if [ "$do_mwinit" = true ]; then
+    mwinit -o <<EOF
+$PASS
+$OTP
+EOF
+  fi
+
+  unset PASS
+  unset OTP
+}
 
 # Source additional local runcommands
 [ -f ~/.localzshrc ] && source ~/.localzshrc
