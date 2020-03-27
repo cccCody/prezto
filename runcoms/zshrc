@@ -23,6 +23,22 @@ alias ta='tmux -CC a -t default || tmux -CC new -s default'
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 [ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
 
+# Mac stuff
+if [[ `uname` == "Darwin" ]]; then
+     kinit_args="--password-file=STDIN"
+     alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
+fi
+
+# Amazon stuff
+if [[ $(hostname) =~ amazon.com ]]; then
+    export PATH=$HOME/.toolbox/bin:$PATH
+    alias swr=~/workspaces/lpt/src/AWSBlackbeardServiceBaseLpt/configuration/bin/ssh-with-role
+    alias lg='pushd build/private/var/output/logs'
+    alias sam="brazil-build-tool-exec sam"
+    alias vi=vim
+    alias b3p=/apollo/env/BrazilThirdPartyTool/bin/brazil-third-party-tool
+fi
+
 aa () {
   do_kinit=false
   do_mwinit=false
@@ -44,7 +60,7 @@ aa () {
   fi
 
   if [ "$do_kinit" = true ]; then
-    kinit -f -l 10h <<< $PASS
+    kinit -f -l 10h $kinit_args <<< $PASS
   fi
 
   if [ "$do_mwinit" = true ]; then
