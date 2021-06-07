@@ -12,24 +12,19 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+main_speckel=~/speckel
+
 # Aliases
 alias sb='"/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl"'
 alias ll='exa -Blh --git --time-style long-iso'
 alias sz='source ~/.zshrc'
 alias ta='tmux -CC a -t default || tmux -CC new -s default'
-alias dup='s && docker-compose -f docker/development/docker-compose.yml up -d'
-alias s='pushd ~/speckel'
-alias start-resque-scheduler="s && nohup bundle exec rake environment resque:scheduler > ./log/scheduler.log 2>&1 &"
-alias start-resque-worker="s && nohup bundle exec rake environment resque:work QUEUE='*' > ./log/resque_worker.log 2>&1 &"
-
-start_resque(){
-  # start-resque-scheduler
-  start-resque-worker
-}
-stop_resque() {
-  ps -ef | egrep 'resque' | grep -v grep | awk '{print $2}' | xargs kill -9
-}
-
+alias s='pushd $main_speckel'
+alias dup='docker-compose -f $main_speckel/docker/development/docker-compose.yml up -d'
+alias dstop='docker-compose -f $main_speckel/docker/development/docker-compose.yml stop'
+alias start-resque-scheduler="(cd $main_speckel && BUNDLE_GEMFILE=$main_speckel/Gemfile nohup bundle exec rake environment resque:scheduler >>! $main_speckel/log/scheduler.log 2>&1 &)"
+alias start-resque-worker="(cd $main_speckel && BUNDLE_GEMFILE=$main_speckel/Gemfile nohup bundle exec rake environment resque:work QUEUE='*' >>! $main_speckel/log/resque_worker.log 2>&1 &)"
+alias stop-resque="ps -ef | egrep '[r]esque' | awk '{print $2}' | xargs kill -9"
 
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 [ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
