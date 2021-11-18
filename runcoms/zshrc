@@ -1,4 +1,4 @@
-# Setup powerlevel9k/10k
+# Setup powerlevel10k
 export TERM="xterm-256color"
 POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
