@@ -20,6 +20,7 @@ alias ll='exa -Blh --git --time-style long-iso'
 alias sz='source ~/.zshrc'
 alias ta='tmux -CC a -t default || tmux -CC new -s default'
 alias s='pushd $main_speckel'
+alias cmd='pushd ~/command_center/ansible'
 alias dup='docker compose -f $main_speckel/docker/development/docker-compose.yml up -d'
 alias dstop='docker compose -f $main_speckel/docker/development/docker-compose.yml stop'
 alias start-resque-scheduler="(cd $main_speckel && BUNDLE_GEMFILE=$main_speckel/Gemfile nohup bundle exec rake environment resque:scheduler >>! $main_speckel/log/scheduler.log 2>&1 &)"
