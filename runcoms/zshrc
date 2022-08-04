@@ -32,7 +32,8 @@ alias flush-dns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 [ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
-[ -f ~/.awskeys ] && source ~/.awskeys
+[ -f ~/.credentials ] && source ~/.credentials
 [ -f /usr/local/opt/asdf/libexec/asdf.sh ] && source /usr/local/opt/asdf/libexec/asdf.sh
 
 export AWS_CA_BUNDLE=$(brew --prefix)/etc/ca-certificates/cert.pem
+export GROOVY_HOME=/usr/local/opt/groovy/libexec
