@@ -29,6 +29,7 @@ alias start-resque-scheduler="(cd $main_speckel && BUNDLE_GEMFILE=$main_speckel/
 alias start-resque-worker="(cd $main_speckel && BUNDLE_GEMFILE=$main_speckel/Gemfile nohup bundle exec rake environment resque:work QUEUE='*' >>! $main_speckel/log/resque_worker.log 2>&1 &)"
 alias stop-resque="ps -ef | egrep '[r]esque' | awk '{print $2}' | xargs kill -9"
 alias flush-dns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
+alias gpm="local MB=$(gh api /repos/{owner}/{repo} --jq '.default_branch'); git fetch origin $MB:$MB"
 
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 [ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
