@@ -12,7 +12,7 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-main_speckel=~/speckel
+main_speckel=~/code/speckel
 
 # Aliases
 alias sb='"/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl"'
@@ -20,9 +20,8 @@ alias ll='exa -Blh --git --time-style long-iso'
 alias sz='source ~/.zshrc'
 alias ta='tmux -CC a -t default || tmux -CC new -s default'
 alias s='pushd $main_speckel'
-alias ios='pushd ~/ios-app'
-alias and='pushd ~/android-app'
-alias cmd='pushd ~/command_center/ansible'
+alias ios='pushd ~/code/ios-app'
+alias and='pushd ~/code/android-app'
 alias dup='docker compose -f $main_speckel/docker/development/docker-compose.yml up -d'
 alias dstop='docker compose -f $main_speckel/docker/development/docker-compose.yml stop'
 alias start-resque-scheduler="(cd $main_speckel && BUNDLE_GEMFILE=$main_speckel/Gemfile nohup bundle exec rake environment resque:scheduler >>! $main_speckel/log/scheduler.log 2>&1 &)"
@@ -30,11 +29,14 @@ alias start-resque-worker="(cd $main_speckel && BUNDLE_GEMFILE=$main_speckel/Gem
 alias stop-resque="ps -ef | egrep '[r]esque' | awk '{print $2}' | xargs kill -9"
 alias flush-dns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 alias gpm='local MB=$(gh api /repos/{owner}/{repo} --jq .default_branch); git fetch origin $MB:$MB'
+alias gst='git status'
+alias gpr='git pull --rebase'
+
+export HOMEBREW_PREFIX=$(brew --prefix)
+export AWS_CA_BUNDLE=$HOMEBREW_PREFIX/etc/ca-certificates/cert.pem
+export GROOVY_HOME=/usr/local/opt/groovy/libexec
+export PKG_CONFIG_PATH=/opt/homebrew/lib/pkgconfig
 
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
-[ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
 [ -f ~/.credentials ] && source ~/.credentials
-[ -f /usr/local/opt/asdf/libexec/asdf.sh ] && source /usr/local/opt/asdf/libexec/asdf.sh
-
-export AWS_CA_BUNDLE=$(brew --prefix)/etc/ca-certificates/cert.pem
-export GROOVY_HOME=/usr/local/opt/groovy/libexec
+[ -f $HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh ] && source $HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh
