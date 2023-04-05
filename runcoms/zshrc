@@ -15,7 +15,6 @@ fi
 main_speckel=~/code/speckel
 
 # Aliases
-alias sb='"/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl"'
 alias ll='exa -Blh --git --time-style long-iso'
 alias sz='source ~/.zshrc'
 alias ta='tmux -CC a -t default || tmux -CC new -s default'
@@ -31,6 +30,7 @@ alias flush-dns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 alias gpm='local MB=$(gh api /repos/{owner}/{repo} --jq .default_branch); git fetch origin $MB:$MB'
 alias gst='git status'
 alias gpr='git pull --rebase'
+alias dbm='rails db:migrate'
 
 export HOMEBREW_PREFIX=$(brew --prefix)
 export AWS_CA_BUNDLE=$HOMEBREW_PREFIX/etc/ca-certificates/cert.pem
