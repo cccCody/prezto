@@ -1,41 +1,36 @@
 # Setup powerlevel10k
-export TERM="xterm-256color"
-POWERLEVEL9K_MODE='nerdfont-complete'
+POWERLEVEL9K_MODE='nerdfont-v3'
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=" "
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs asdf)
 
-# Source Prezto.
+# Source Prezto
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-main_speckel=~/code/speckel
+# Environment variables
+export SPECKEL=~/code/speckel
+export HOMEBREW_PREFIX=$(brew --prefix)
+export GROOVY_HOME=$HOMEBREW_PREFIX/opt/groovy/libexec
+export PKG_CONFIG_PATH=$HOMEBREW_PREFIX/lib/pkgconfig
 
 # Aliases
 alias ll='exa -Blh --git --time-style long-iso'
 alias sz='source ~/.zshrc'
 alias ta='tmux -CC a -t default || tmux -CC new -s default'
-alias s='pushd $main_speckel'
+alias s='pushd $SPECKEL'
 alias ios='pushd ~/code/ios-app'
 alias and='pushd ~/code/android-app'
-alias dup='docker compose -f $main_speckel/docker/development/docker-compose.yml up -d'
-alias dstop='docker compose -f $main_speckel/docker/development/docker-compose.yml stop'
-alias start-resque-scheduler="(cd $main_speckel && BUNDLE_GEMFILE=$main_speckel/Gemfile nohup bundle exec rake environment resque:scheduler >>! $main_speckel/log/scheduler.log 2>&1 &)"
-alias start-resque-worker="(cd $main_speckel && BUNDLE_GEMFILE=$main_speckel/Gemfile nohup bundle exec rake environment resque:work QUEUE='*' >>! $main_speckel/log/resque_worker.log 2>&1 &)"
-alias stop-resque="ps -ef | egrep '[r]esque' | awk '{print $2}' | xargs kill -9"
+alias dup='docker compose -f $SPECKEL/docker/development/docker-compose.yml up -d'
+alias dstop='docker compose -f $SPECKEL/docker/development/docker-compose.yml stop'
 alias flush-dns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 alias gpm='local MB=$(gh api /repos/{owner}/{repo} --jq .default_branch); git fetch origin $MB:$MB'
 alias gst='git status'
 alias gpr='git pull --rebase'
 alias dbm='rails db:migrate'
-
-export HOMEBREW_PREFIX=$(brew --prefix)
-export AWS_CA_BUNDLE=$HOMEBREW_PREFIX/etc/ca-certificates/cert.pem
-export GROOVY_HOME=/usr/local/opt/groovy/libexec
-export PKG_CONFIG_PATH=/opt/homebrew/lib/pkgconfig
 
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 [ -f ~/.credentials ] && source ~/.credentials
