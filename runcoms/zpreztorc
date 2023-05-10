@@ -185,9 +185,9 @@ zstyle ':prezto:module:prompt' theme 'powerlevel10k'
 
 # Set syntax highlighters.
 # By default, only the main highlighter is enabled.
-# zstyle ':prezto:module:syntax-highlighting' highlighters \
-#   'main' \
-#   'brackets' \
+zstyle ':prezto:module:syntax-highlighting' highlighters \
+   'main' \
+   'brackets' \
 #   'pattern' \
 #   'line' \
 #   'cursor' \
