@@ -35,3 +35,4 @@ alias dbm='rails db:migrate'
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 [ -f ~/.credentials ] && source ~/.credentials
 [ -f $HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh ] && source $HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh
+[ -f $HOME/.cargo/env ] && source "$HOME/.cargo/env"
