@@ -31,8 +31,15 @@ alias gpm='local MB=$(gh api /repos/{owner}/{repo} --jq .default_branch); git fe
 alias gst='git status'
 alias gpr='git pull --rebase'
 alias dbm='rails db:migrate'
+alias sso='aws sts get-caller-identity &> /dev/null || aws sso login'
 
+# External scripts
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 [ -f ~/.credentials ] && source ~/.credentials
-[ -f $HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh ] && source $HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh
 [ -f $HOME/.cargo/env ] && source "$HOME/.cargo/env"
+source $HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh
+
+# Completion
+source <(kubectl completion zsh)
+autoload bashcompinit && bashcompinit
+complete -C '/usr/local/bin/aws_completer' aws
