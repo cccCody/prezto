@@ -32,6 +32,8 @@ alias gst='git status'
 alias gpr='git pull --rebase'
 alias dbm='rails db:migrate'
 alias sso='aws sts get-caller-identity &> /dev/null || aws sso login'
+alias rcp='print -P "%F{yellow}Connecting to production!%f" && kubectl exec -it deployment/rails-console -n speckel --context arn:aws:eks:us-east-1:439567033621:cluster/core-production -- rails console production'
+alias rcs='print -P "%F{green}Connecting to staging4%f" && kubectl exec -it deployment/rails-console -n speckel --context arn:aws:eks:us-east-1:439567033621:cluster/staging4 -- rails console staging'
 
 # External scripts
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
