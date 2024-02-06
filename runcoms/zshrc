@@ -2,7 +2,7 @@
 POWERLEVEL9K_MODE='nerdfont-v3'
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=" "
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=""
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs asdf)
 
@@ -24,7 +24,6 @@ alias ta='tmux -CC a -t default || tmux -CC new -s default'
 alias s='pushd $SPECKEL'
 alias ios='pushd ~/code/ios-app'
 alias and='pushd ~/code/android-app'
-alias dup='docker compose -f $SPECKEL/docker/development/docker-compose.yml up -d'
 alias dstop='docker compose -f $SPECKEL/docker/development/docker-compose.yml stop'
 alias flush-dns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 alias gpm='local MB=$(gh api /repos/{owner}/{repo} --jq .default_branch); git fetch origin $MB:$MB'
@@ -33,7 +32,20 @@ alias gpr='git pull --rebase'
 alias dbm='rails db:migrate'
 alias sso='aws sts get-caller-identity &> /dev/null || aws sso login'
 alias rcp='print -P "%F{yellow}Connecting to production!%f" && kubectl exec -it deployment/rails-console -n speckel --context arn:aws:eks:us-east-1:439567033621:cluster/core-production -- rails console production'
-alias rcs='print -P "%F{green}Connecting to staging4%f" && kubectl exec -it deployment/rails-console -n speckel --context arn:aws:eks:us-east-1:439567033621:cluster/staging4 -- rails console staging'
+rcs() { print -P "%F{green}Connecting to staging$1%f" && kubectl exec -it deployment/rails-console -n speckel --context arn:aws:eks:us-east-1:439567033621:cluster/core-staging-a --namespace=speckel-staging$1 -- rails console staging }
+update-kubeconfig() {
+  aws eks update-kubeconfig --profile tools --name tools-production-b
+  aws eks update-kubeconfig --name core-staging-a
+  aws eks update-kubeconfig --name core-production
+}
+dup() {
+  if ! pgrep Docker > /dev/null ; then
+    echo "Launching docker..."
+    open -a Docker
+    sleep 20
+  fi
+  docker compose -f $SPECKEL/docker/development/docker-compose.yml up -d
+}
 
 # External scripts
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
