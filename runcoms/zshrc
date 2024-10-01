@@ -21,7 +21,7 @@ export PKG_CONFIG_PATH=$HOMEBREW_PREFIX/lib/pkgconfig
 fi
 
 # Aliases
-alias ll='exa -Blh --git --time-style long-iso'
+alias ll='eza -Blh --git --time-style long-iso'
 alias sz='source ~/.zshrc'
 alias ta='tmux -CC a -t default || tmux -CC new -s default'
 alias flush-dns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
